@@ -1,0 +1,547 @@
+swagger: '2.0'
+info:
+  title: API Project IntelliChat 
+  description: Documetação das APIS do IntelliChat, que tem como objetivo uma construção de um chatBot com integração com chatGpt,  focado em insights para os usuários, onde eles podem ter ideias de onde encontrar o que desejam, sendo loja ou produto.
+  version: 1.0.0
+host: api.intelliChat.com
+basePath: /v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /usuarios:
+    post:
+      summary: Cria um novo usuário
+      description: Cria um novo usuário no sistema
+      parameters:
+        - name: usuario
+          in: body
+          description: Objeto usuário a ser criado
+          required: true
+          schema:
+            type: object
+            properties:
+              nome:
+                type: string
+              email:
+                type: string
+                format: email
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+    get:
+      summary: Retorna uma lista de usuários
+      description: Retorna uma lista de usuários cadastrados no sistema
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                email:
+                  type: string
+                  format: email
+  /usuarios/{id}:
+    get:
+      summary: Retorna um usuário pelo ID
+      description: Retorna um usuário cadastrado no sistema pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID do usuário a ser retornado
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              nome:
+                type: string
+              email:
+                type: string
+                format: email
+        404:
+          description: Not Found
+    put:
+      summary: Atualiza um usuário pelo ID
+      description: Atualiza um usuário cadastrado no sistema pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID do usuário a ser atualizado
+          required: true
+          type: integer
+        - name: usuario
+          in: body
+          description: Objeto usuário com dados atualizados
+          required: true
+          schema:
+            type: object
+            properties:
+              nome:
+                type: string
+              email:
+                type: string
+                format: email
+      responses:
+        200:
+          description: OK
+        400:
+          description: Bad Request
+        404:
+          description: Not Found
+    delete:
+      summary: Exclui um usuário pelo ID
+      description: Exclui um usuário cadastrado no sistema pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID do usuário a ser excluído
+          required: true
+          type: integer
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Not Found
+  /produtos:
+    post:
+      summary: Cria um novo produto
+      description: Cria um novo produto no sistema
+      parameters:
+        - name: produto
+          in: body
+          description: Objeto produto a ser criado
+          required: true
+          schema:
+            type: object
+            properties:
+              nome:
+                type: string
+              preço:
+                type: number
+                format: float
+              descrição:
+                type: string
+              tipo:
+                type: string
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+    get:
+      summary: Retorna uma lista de produtos
+      description: Retorna uma lista de produtos cadastrados no sistema
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                preço:
+                  type: number
+                  format: float
+                descrição:
+                  type: string
+                tipo:
+                  type: string
+  /produtos/{id}:
+    get:
+      summary: Retorna um produto pelo ID
+      description: Retorna um produto cadastrado no sistema pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID do produto a ser retornado
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              nome:
+                type: string
+              preço:
+                type: number
+                format: float
+              descrição:
+                type: string
+              tipo:
+                type: string
+        404:
+          description: Not Found
+    put:
+      summary: Atualiza um produto pelo ID
+      description: Atualiza um produto cadastrado no sistema pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID do produto a ser atualizado
+          required: true
+          type: integer
+        - name: produto
+          in: body
+          description: Objeto produto com dados atualizados
+          required: true
+          schema:
+            type: object
+            properties:
+              nome:
+                type: string
+              preço:
+                type: number
+                format: float
+              descrição:
+                type: string
+              tipo:
+                type: string
+      responses:
+        200:
+          description: OK
+        400:
+          description: Bad Request
+        404:
+          description: Not Found
+    delete:
+      summary: Exclui um produto pelo ID
+      description: Exclui um produto cadastrado no sistema pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID do produto a ser excluído
+          required: true
+          type: integer
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Not Found
+  /contratantes:
+    post:
+      summary: Cria um novo contratante
+      description: Cria um novo contratante no sistema
+      parameters:
+        - name: contratante
+          in: body
+          description: Objeto contratante a ser criado
+          required: true
+          schema:
+            type: object
+            properties:
+              nome_fantasia:
+                type: string
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+    get:
+      summary: Retorna uma lista de contratantes
+      description: Retorna uma lista de contratantes cadastrados no sistema
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome_fantasia:
+                  type: string
+  /contratantes/{id}:
+    get:
+      summary: Retorna um contratante pelo ID
+      description: Retorna um contratante cadastrado no sistema pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID do contratante a ser retornado
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              nome_fantasia:
+                type: string
+        404:
+          description: Not Found
+    put:
+      summary: Atualiza um contratante pelo ID
+      description: Atualiza um contratante cadastrado no sistema pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID do contratante a ser atualizado
+          required: true
+          type: integer
+        - name: contratante
+          in: body
+          description: Objeto contratante com dados atualizados
+          required: true
+          schema:
+            type: object
+            properties:
+              nome_fantasia:
+                type: string
+      responses:
+        200:
+          description: OK
+        400:
+          description: Bad Request
+        404:
+          description: Not Found
+    delete:
+      summary: Exclui um contratante pelo ID
+      description: Exclui um contratante cadastrado no sistema pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID do contratante a ser excluído
+          required: true
+          type: integer
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Not Found
+  /contratados:
+    post:
+      summary: Cria um novo contratado
+      description: Cria um novo contratado no sistema
+      parameters:
+        - name: contratado
+          in: body
+          description: Objeto contratado a ser criado
+          required: true
+          schema:
+            type: object
+            properties:
+              nome:
+                type: string
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+    get:
+      summary: Retorna uma lista de contratados
+      description: Retorna uma lista de contratados cadastrados no sistema
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+  /contratados/{id}:
+    get:
+      summary: Retorna um contratado pelo ID
+      description: Retorna um contratado cadastrado no sistema pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID do contratado a ser retornado
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              nome:
+                type: string
+        404:
+          description: Not Found
+    put:
+      summary: Atualiza um contratado pelo ID
+      description: Atualiza um contratado cadastrado no sistema pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID do contratado a ser atualizado
+          required: true
+          type: integer
+        - name: contratado
+          in: body
+          description: Objeto contratado com dados atualizados
+          required: true
+          schema:
+            type: object
+            properties:
+              nome:
+                type: string
+      responses:
+        200:
+          description: OK
+        400:
+          description: Bad Request
+        404:
+          description: Not Found
+    delete:
+      summary: Exclui um contratado pelo ID
+      description: Exclui um contratado cadastrado no sistema pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID do contratado a ser excluído
+          required: true
+          type: integer
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Not Found
+  /contrato:
+    post:
+      summary: Cria um novo contrato
+      description: Cria um novo contrato no sistema
+      parameters:
+        - name: contrato
+          in: body
+          description: Objeto contrato a ser criado
+          required: true
+          schema:
+            type: object
+            properties:
+              data_inicio:
+                type: string
+                format: date
+              data_fim:
+                type: string
+                format: date
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+    get:
+      summary: Retorna uma lista de contratos
+      description: Retorna uma lista de contratos cadastrados no sistema
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                data_inicio:
+                  type: string
+                  format: date
+                data_fim:
+                  type: string
+                  format: date
+  /contrato/{id}:
+    get:
+      summary: Retorna um contrato pelo ID
+      description: Retorna um contrato cadastrado no sistema pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID do contrato a ser retornado
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+                id:
+                  type: integer
+                data_inicio:
+                  type: string
+                  format: date
+                data_fim:
+                  type: string
+                  format: date
+        404:
+          description: Not Found
+    put:
+      summary: Atualiza um contrato pelo ID
+      description: Atualiza um contrato cadastrado no sistema pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID do contratado a ser atualizado
+          required: true
+          type: integer
+        - name: contratado
+          in: body
+          description: Objeto contratado com dados atualizados
+          required: true
+          schema:
+            type: object
+            properties:
+                id:
+                  type: integer
+                data_inicio:
+                  type: string
+                  format: date
+                data_fim:
+                  type: string
+                  format: date
+      responses:
+        200:
+          description: OK
+        400:
+          description: Bad Request
+        404:
+          description: Not Found
+    delete:
+      summary: Exclui um contrato pelo ID
+      description: Exclui um contrato cadastrado no sistema pelo ID
+      parameters:
+        - name: id
+          in: path
+          description: ID do contrato a ser excluído
+          required: true
+          type: integer
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Not Found
